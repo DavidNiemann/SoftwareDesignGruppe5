@@ -1,44 +1,41 @@
 import prompts, { Answers, PromptType } from 'prompts';
-class NumberQuestion extends Question {
-  private _questionText: string;
-  private _answers: Array<number> = [];
-  private _correctAnswer: number;
+import Console from './singletons/Console';
+export class NumberQuestion /*extends Question*/ {
+    private questionText: string ="";
+    private answers: Array<number> = [];
+    private correctAnswer: number = 0;
 
-  constructor(
-    _questionText: string,
-    _answers: Array<number>,
-    _correctAnswer: number
-  ) {
-    super();
-    this._questionText = _questionText;
-    this._answers = _answers;
-    this._correctAnswer = _correctAnswer;
-  }
+    constructor(
+    ) {
+        //super();
+    }
 
-  public setAnswers(_answers: number, _type: PromptType): Promise<Answers<string>> {
-    return prompts({
-        type: _type,
-        name: 'value',
-        message: _answers.toString(),
-        initial: 1
-      })
-  }
+    public async setAnswers(): Promise<void> {
+        let correct: Answers<string> = await Console.askForAnAnswers("Gib die korrekte Antwort ein:", 'number');
+        this.correctAnswer = correct.value;
+        this.answers.push(correct.value);
 
-  public setQuestion(_questionText: string,  _type: PromptType): Promise<Answers<string>> {
-    return prompts({
-      type: _type,
-      name: 'value',
-      message: _questionText,
-      initial: 1
-    })
-  }
+        let nextAnswer: boolean= true;
+        while(nextAnswer == true){
+            let falseAnswer: Answers<string>= await Console.askForAnAnswers("Gib eine falsche Antwort ein:", 'number');
+            this.answers.push(falseAnswer.value);
+            if(this.answers.length>=4){
+                nextAnswer = false;
+                break;
+            }
+            let antoherAnswer: Answers<string>= await Console.askForAnAnswers("Willst du noch eine Frage eingeben?:", 'confirm');
+            nextAnswer=antoherAnswer.value;
+        }
+    }
 
-  public clone(): NumberQuestion {
-    let clonedQuestion: NumberQuestion = new NumberQuestion(
-      this._questionText,
-      this._answers,
-      this._correctAnswer
-    );
-    return clonedQuestion;
-  }
+    public async setQuestion(): Promise<void> {
+        let questionText: Answers<string> = await Console.askForAnAnswers("Gib eine Frage ein:", 'text');
+    }
+
+    public clone(): NumberQuestion {
+        let clonedQuestion: NumberQuestion = new NumberQuestion(
+            
+        );
+        return clonedQuestion;
+    }
 }
