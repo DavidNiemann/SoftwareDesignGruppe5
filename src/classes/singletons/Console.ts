@@ -2,7 +2,7 @@ import readline from 'readline';
 import prompts, { Answers } from 'prompts';
 
 class Console {
-  private static _instance : Console = new Console();
+  private static instance : Console = new Console();
 
   public consoleLine : readline.ReadLine = readline.createInterface({
       input: process.stdin,
@@ -10,13 +10,13 @@ class Console {
     })
 
   constructor() {
-    if(Console._instance) 
+    if(Console.instance) 
       throw new Error("Instead of using new Console(), please use Console.getInstance() for Singleton!")
-    Console._instance = this;
+    Console.instance = this;
   }
 
   public static getInstance() : Console {
-    return Console._instance;
+    return Console.instance;
   }
 
   public printLine(line : string) : void {
@@ -24,18 +24,45 @@ class Console {
     this.consoleLine.write("\n");
   }
 
-  public showOptions(options : string[], question: string) : Promise<Answers<string>> {
+  public showOptions(_options : string[], _question: string) : Promise<Answers<string>> {
 
     let choices: any[] = []
 
-    for(let i: number = 1; i <= options.length; i++) {
-      choices.push( { title: options[i-1], value: i })
+    for(let i: number = 1; i <= _options.length; i++) {
+      choices.push( { title: _options[i-1], value: i })
     }
     return prompts({
       type: 'select',
       name: 'value',
-      message: question,
+      message: _question,
       choices: choices,
+      initial: 1
+    })
+  }
+
+  public askForAnPassword(_question: string) : Promise<Answers<string>> {
+    return prompts({
+      type: 'password',
+      name: 'value',
+      message: _question,
+      initial: 1
+    })
+  }
+
+  public askForAnTextAnswers(_question: string) : Promise<Answers<string>> {
+    return prompts({
+      type: 'text',
+      name: 'value',
+      message: _question,
+      initial: 1
+    })
+  }
+
+  public askForAnNumberAnswers(_question: string) : Promise<Answers<string>> {
+    return prompts({
+      type: 'number',
+      name: 'value',
+      message: _question,
       initial: 1
     })
   }

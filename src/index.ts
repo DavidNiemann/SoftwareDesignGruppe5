@@ -29,9 +29,10 @@ namespace Project {
       this.handleAnswerLogin(answer.value);
     }
     
-    public handleAnswerLogin(answer : number) : void {
-    switch(answer) {
+    public handleAnswerLogin(_answer : number) : void {
+    switch(_answer) {
       case 1:
+        this.writeUserFile(); 
         //this.readPersonFile();  
         break;
       case 2:
@@ -51,13 +52,14 @@ namespace Project {
       this.consoleLine.write("I'm running");
       this.showOptionsLogin();
     }
-    /* public writePersonFile() : void {
+
+    public writeUserFile() : void {
 
     }
 
     public readPersonFile() : void {
      
-    } */
+    }
   }
   
 
