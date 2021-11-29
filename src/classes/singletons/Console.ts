@@ -40,7 +40,7 @@ class Console {
     })
   }
 
-  public askForAnPassword(_question: string , _type: PromptType) : Promise<Answers<string>> {
+  public askForAnAnswers(_question: string , _type: PromptType) : Promise<Answers<string>> {
     return prompts({
       type: _type,
       name: 'value',
