@@ -1,10 +1,17 @@
 class NumberQuestion extends Question{
 
-    private questionText: string;
-    private answer: number;
-    private correctAnswer: number;
+    private _questionText: string;
+    private _answers: Array<number> = [];
+    private _correctAnswer: number;
+
+    constructor(_questionText: string, _answers: Array<number>, _correctAnswer: number) {
+        super();
+        this._questionText = _questionText;
+        this._answers = _answers;
+        this._correctAnswer = _correctAnswer;
+      }
     
-    public setAnswer(_answer: number): void{
+    public setAnswers(_answer: number): void{
 
     }
 
@@ -12,7 +19,8 @@ class NumberQuestion extends Question{
 
     }
 
-    public clone(): Question{
-
-    }
+    public clone(): NumberQuestion {
+        let clonedQuestion: NumberQuestion = new NumberQuestion(this._questionText, this._answers, this._correctAnswer);
+        return clonedQuestion;
+      }
 }
