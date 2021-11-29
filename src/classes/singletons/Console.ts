@@ -1,5 +1,5 @@
 import readline from 'readline';
-import prompts, { Answers } from 'prompts';
+import prompts, { Answers, PromptType } from 'prompts';
 
 class Console {
   private static instance : Console = new Console();
@@ -40,27 +40,9 @@ class Console {
     })
   }
 
-  public askForAnPassword(_question: string) : Promise<Answers<string>> {
+  public askForAnPassword(_question: string , _type: PromptType) : Promise<Answers<string>> {
     return prompts({
-      type: 'password',
-      name: 'value',
-      message: _question,
-      initial: 1
-    })
-  }
-
-  public askForAnTextAnswers(_question: string) : Promise<Answers<string>> {
-    return prompts({
-      type: 'text',
-      name: 'value',
-      message: _question,
-      initial: 1
-    })
-  }
-
-  public askForAnNumberAnswers(_question: string) : Promise<Answers<string>> {
-    return prompts({
-      type: 'number',
+      type: _type,
       name: 'value',
       message: _question,
       initial: 1
