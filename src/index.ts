@@ -16,24 +16,28 @@ namespace Project {
     }
 
 
-    public async showOptions() : Promise<void> {
+    public async showOptionsLogin() : Promise<void> {
       let answer: Answers<string> = await Console.showOptions(
         [
-          "creade Quiz",
-          "search Quiz",
+          "register",
+          "login",
+          "continue as guest"
         ], 
         "Which option do you want to choose?"
       );
   
-      this.handleAnswer(answer.value);
+      this.handleAnswerLogin(answer.value);
     }
     
-    public handleAnswer(answer : string) : void {
+    public handleAnswerLogin(answer : number) : void {
     switch(answer) {
-      case "1":
-        //this.readPersonFile();
+      case 1:
+        //this.readPersonFile();  
         break;
-      case "2":
+      case 2:
+        //this.writePersonFile();   
+        break;
+      case 3:
         //this.writePersonFile();
         break;
       default:
@@ -45,9 +49,8 @@ namespace Project {
 
     public showProgramStatus() : void {
       this.consoleLine.write("I'm running");
-      this.showOptions();
+      this.showOptionsLogin();
     }
-    
     /* public writePersonFile() : void {
 
     }

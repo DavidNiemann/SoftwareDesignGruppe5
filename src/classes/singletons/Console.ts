@@ -25,14 +25,17 @@ class Console {
   }
 
   public showOptions(options : string[], question: string) : Promise<Answers<string>> {
+
+    let choices: any[] = []
+
+    for(let i: number = 1; i <= options.length; i++) {
+      choices.push( { title: options[i-1], value: i })
+    }
     return prompts({
       type: 'select',
       name: 'value',
       message: question,
-      choices: [
-        { title: options[0], value: '1' },
-        { title: options[1], value: '2' }
-      ],
+      choices: choices,
       initial: 1
     })
   }
