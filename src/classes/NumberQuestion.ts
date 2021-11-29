@@ -1,3 +1,4 @@
+import prompts, { Answers, PromptType } from 'prompts';
 class NumberQuestion extends Question {
   private _questionText: string;
   private _answers: Array<number> = [];
@@ -14,9 +15,23 @@ class NumberQuestion extends Question {
     this._correctAnswer = _correctAnswer;
   }
 
-  public setAnswers(_answer: number): void {}
+  public setAnswers(_answers: number, _type: PromptType): Promise<Answers<string>> {
+    return prompts({
+        type: _type,
+        name: 'value',
+        message: _answers.toString(),
+        initial: 1
+      })
+  }
 
-  public setQuestion(_questionText: string): void {}
+  public setQuestion(_questionText: string,  _type: PromptType): Promise<Answers<string>> {
+    return prompts({
+      type: _type,
+      name: 'value',
+      message: _questionText,
+      initial: 1
+    })
+  }
 
   public clone(): NumberQuestion {
     let clonedQuestion: NumberQuestion = new NumberQuestion(
