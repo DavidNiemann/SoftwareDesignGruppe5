@@ -31,8 +31,7 @@ class Console {
       message: question,
       choices: [
         { title: options[0], value: '1' },
-        { title: options[1], value: '2' },
-        { title: options[2], value: '3' }
+        { title: options[1], value: '2' }
       ],
       initial: 1
     })
