@@ -18,7 +18,6 @@ export class FileHandler {
   public readJsonFile(_pathToFile: string) : any {
     let jsonRaw : Buffer = readFileSync(resolve(this.rootDir + _pathToFile));
     let json : any = JSON.parse(jsonRaw.toString());
-
     return json;
   }
 
