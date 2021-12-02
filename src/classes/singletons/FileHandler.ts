@@ -22,8 +22,11 @@ export class FileHandler {
   }
 
   public writeJsonFile(_pathToFile : string, _dataToFile: any) : void {
-    writeFileSync(resolve(this.rootDir + _pathToFile), JSON.stringify(_dataToFile));
+    let file: any[] = this.readJsonFile(_pathToFile)
+    file.push(_dataToFile)
+    writeFileSync(resolve(this.rootDir + _pathToFile), JSON.stringify(file));
   }
+
 }
 
 export default FileHandler.getInstance();

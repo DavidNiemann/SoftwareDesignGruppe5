@@ -4,20 +4,20 @@ export class NumberQuestion /*extends Question*/ {
     private questionText: string ="";
     private answers: Array<number> = [];
     private correctAnswer: number = 0;
-
+    private type: prompts.PromptType = 'number'
     constructor(
     ) {
         //super();
     }
 
     public async setAnswers(): Promise<void> {
-        let correct: Answers<string> = await Console.askForAnAnswers("Gib die korrekte Antwort ein:", 'number');
+        let correct: Answers<string> = await Console.askForAnAnswers("Gib die korrekte Antwort ein:", this.type);
         this.correctAnswer = correct.value;
         this.answers.push(correct.value);
 
         let nextAnswer: boolean= true;
         while(nextAnswer == true){
-            let falseAnswer: Answers<string>= await Console.askForAnAnswers("Gib eine falsche Antwort ein:", 'number');
+            let falseAnswer: Answers<string>= await Console.askForAnAnswers("Gib eine falsche Antwort ein:", this.type);
             this.answers.push(falseAnswer.value);
             if(this.answers.length>=4){
                 nextAnswer = false;

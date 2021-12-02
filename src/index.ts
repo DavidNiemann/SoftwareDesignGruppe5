@@ -1,7 +1,7 @@
 import * as readline from 'readline';
 
 import Console from './classes/singletons/Console';
-//import NumberQuestion from './classes/NumberQuestion';
+//import {NumberQuestion} from './classes/NumberQuestion';
 import { Answers } from 'prompts';
 import { User } from './classes/User';
 
@@ -40,7 +40,7 @@ namespace Project {
           break;
         case 2:
           this.handleUser("login")
- 
+
           break;
         case 3:
 
@@ -59,25 +59,25 @@ namespace Project {
       //await ques.setQuestion();
       //await ques.setAnswers();
     }
-    public async handleUser(_task: string): Promise<void>{
+    public async handleUser(_task: string): Promise<void> {
       let userName: Answers<string> = await Console.askForAnAnswers("gib dein UserNamen ein", 'text')
       let password: Answers<string> = await Console.askForAnAnswers("gib dein Passwort ein", 'password')
       switch (_task) {
         case "register":
-          this.user.register(userName.value, password.value) 
+          this.user.register(userName.value, password.value)
 
           break;
         case "login":
-        let success = await this.user.login(userName.value, password.value) 
-        Console.printLine(success + "");
+          let success = await this.user.login(userName.value, password.value)
+          Console.printLine(success + "");
           break;
         default:
           Console.printLine("task not available!");
       }
-     
+
 
     }
-   
+
   }
 
 
