@@ -1,19 +1,20 @@
 import prompts, { Answers, PromptType } from 'prompts';
 import Console from './singletons/Console';
-export class ChoiceQuestion /*extends Question*/ {
-    private questionText: string ="";
-    private answers: Array<number> = [];
-    private correctAnswer: number = 0;
-    private type: prompts.PromptType = 'toggle'
+import { Question } from './Question'
+
+export class ChoiceQuestion extends Question {
+    protected questionText: string = "";
+    public answers: Array<string> = [];
+    protected correctAnswer: string = "";
+    protected type: prompts.PromptType = 'text'
     constructor(
     ) {
-        //super();
+        super();
     }
 
     public async setAnswers(): Promise<void> {
-        let correct: Answers<string> = await Console.askForAnAnswers("Gib die korrekte Antwort ein:", this.type);
-        this.correctAnswer = correct.value;
-        this.answers.push(correct.value);
+        await super.setAnswers();
+        this.answers.push(this.correctAnswer);
 
         let nextAnswer: boolean= true;
         while(nextAnswer == true){
@@ -28,9 +29,6 @@ export class ChoiceQuestion /*extends Question*/ {
         }
     }
 
-    public async setQuestion(): Promise<void> {
-        let questionText: Answers<string> = await Console.askForAnAnswers("Gib eine Frage ein:", 'text');
-    }
 
     public clone(): ChoiceQuestion {
         let clonedQuestion: ChoiceQuestion = new ChoiceQuestion(

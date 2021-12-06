@@ -1,7 +1,9 @@
 import * as readline from 'readline';
 
 import Console from './classes/singletons/Console';
-//import {NumberQuestion} from './classes/NumberQuestion';
+import {NumberQuestion} from './classes/NumberQuestion';
+import {TextQuestion} from './classes/TextQuestion';
+import {ChoiceQuestion} from './classes/ChoiceQuestion';
 import { Answers } from 'prompts';
 import { User } from './classes/User';
 
@@ -54,8 +56,8 @@ namespace Project {
 
     public async showProgramStatus(): Promise<void> {
       this.consoleLine.write("I'm running");
-      this.showOptionsLogin()
-      //let ques: NumberQuestion = new NumberQuestion()
+      this.showOptionsLogin();
+      //let ques: ChoiceQuestion = new ChoiceQuestion()
       //await ques.setQuestion();
       //await ques.setAnswers();
     }
