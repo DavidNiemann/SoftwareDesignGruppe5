@@ -1,28 +1,41 @@
-class TextQuestion {
-  private _questionText: string;
-  private _answers: Array<string> = [];
-  private _correctAnswer: string;
+import prompts, { Answers, PromptType } from 'prompts';
+import Console from './singletons/Console';
+export class TextQuestion /*extends Question*/ {
+    private questionText: string ="";
+    private answers: Array<number> = [];
+    private correctAnswer: number = 0;
+    private type: prompts.PromptType = 'text'
+    constructor(
+    ) {
+        //super();
+    }
 
-  constructor(
-    questionText: string,
-    answers: Array<string>,
-    correctAnswer: string
-  ) {
-    this._questionText = questionText;
-    this._answers = answers;
-    this._correctAnswer = correctAnswer;
-  }
+    public async setAnswers(): Promise<void> {
+        let correct: Answers<string> = await Console.askForAnAnswers("Gib die korrekte Antwort ein:", this.type);
+        this.correctAnswer = correct.value;
+        this.answers.push(correct.value);
 
-  public setAnswers(_answer: string): void {}
+        let nextAnswer: boolean= true;
+        while(nextAnswer == true){
+            let falseAnswer: Answers<string>= await Console.askForAnAnswers("Gib eine falsche Antwort ein:", this.type);
+            this.answers.push(falseAnswer.value);
+            if(this.answers.length>=4){
+                nextAnswer = false;
+                break;
+            }
+            let antoherAnswer: Answers<string>= await Console.askForAnAnswers("Willst du noch eine Frage eingeben?:", 'confirm');
+            nextAnswer=antoherAnswer.value;
+        }
+    }
 
-  public setQuestion(_questionText: string): void {}
+    public async setQuestion(): Promise<void> {
+        let questionText: Answers<string> = await Console.askForAnAnswers("Gib eine Frage ein:", 'text');
+    }
 
-  public clone(): TextQuestion {
-    let clonedQuestion: TextQuestion = new TextQuestion(
-      this._questionText,
-      this._answers,
-      this._correctAnswer
-    );
-    return clonedQuestion;
-  }
+    public clone(): TextQuestion {
+        let clonedQuestion: TextQuestion = new TextQuestion(
+            
+        );
+        return clonedQuestion;
+    }
 }

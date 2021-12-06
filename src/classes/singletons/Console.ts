@@ -24,6 +24,7 @@ class Console {
     this.consoleLine.write("\n");
   }
 
+  //for showing options (choices)
   public showOptions(_options : string[], _question: string) : Promise<Answers<string>> {
 
     let choices: any[] = []
@@ -40,6 +41,7 @@ class Console {
     })
   }
 
+  //for input
   public askForAnAnswers(_question: string , _type: PromptType) : Promise<Answers<string>> {
     return prompts({
       type: _type,
