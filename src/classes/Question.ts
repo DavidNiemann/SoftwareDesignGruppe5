@@ -14,6 +14,7 @@ export abstract class Question {
 
   public async setQuestion(): Promise<void> {
     let questionText: Answers<string> = await Console.askForAnAnswers("Gib eine Frage ein:", 'text');
+    this.questionText = questionText.value;
   }
 
   public async setAnswers(): Promise<void> {
