@@ -31,3 +31,4 @@ class Question {
       }
 
 }
+/**setAnswer und setQuestion von Samu übernehmen in Abstract*/
