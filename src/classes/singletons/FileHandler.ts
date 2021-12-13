@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from "fs";
-import { dirname, resolve } from "path";
+//import { dirname, resolve } from "path";
 
 export class FileHandler {
   private static instance : FileHandler = new FileHandler();
-  private rootDir : Array<string> = [__dirname, "../../../../"];
+ 
 
   private constructor() {
     if(FileHandler.instance) 
@@ -16,7 +16,7 @@ export class FileHandler {
   }
 
   public readJsonFile(_pathToFile: string) : any {
-    let jsonRaw : Buffer = readFileSync(resolve(this.rootDir + _pathToFile));
+    let jsonRaw : Buffer = readFileSync(_pathToFile);
     let json : any = JSON.parse(jsonRaw.toString());
     return json;
   }
@@ -24,7 +24,7 @@ export class FileHandler {
   public writeJsonFile(_pathToFile : string, _dataToFile: any) : void {
     let file: any[] = this.readJsonFile(_pathToFile)
     file.push(_dataToFile)
-    writeFileSync(resolve(this.rootDir + _pathToFile), JSON.stringify(file));
+    writeFileSync(_pathToFile, JSON.stringify(file));
   }
 
 }

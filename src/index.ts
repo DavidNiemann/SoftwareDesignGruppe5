@@ -1,9 +1,10 @@
 import * as readline from 'readline';
 
 import Console from './classes/singletons/Console';
-import {NumberQuestion} from './classes/NumberQuestion';
-import {TextQuestion} from './classes/TextQuestion';
-import {ChoiceQuestion} from './classes/ChoiceQuestion';
+//import {NumberQuestion} from './classes/NumberQuestion';
+//import {TextQuestion} from './classes/TextQuestion';
+//import {ChoiceQuestion} from './classes/ChoiceQuestion';
+import {Quiz} from './classes/Quiz';
 import { Answers } from 'prompts';
 import { User } from './classes/User';
 
@@ -56,21 +57,21 @@ namespace Project {
 
     public async showProgramStatus(): Promise<void> {
       this.consoleLine.write("I'm running");
-      this.showOptionsLogin();
-      //let ques: ChoiceQuestion = new ChoiceQuestion()
-      //await ques.setQuestion();
-      //await ques.setAnswers();
+      //this.showOptionsLogin();
+      let newQuiz = new Quiz("user");
+
+      newQuiz.createQuiz();
+      
     }
     public async handleUser(_task: string): Promise<void> {
       let userName: Answers<string> = await Console.askForAnAnswers("gib dein UserNamen ein", 'text')
       let password: Answers<string> = await Console.askForAnAnswers("gib dein Passwort ein", 'password')
       switch (_task) {
         case "register":
-          this.user.register(userName.value, password.value)
-
+          this.user.register(userName.value, password.value);
           break;
         case "login":
-          let success = await this.user.login(userName.value, password.value)
+          let success = await this.user.login(userName.value, password.value);
           Console.printLine(success + "");
           break;
         default:
