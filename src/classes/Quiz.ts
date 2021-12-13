@@ -32,10 +32,8 @@ export class Quiz {
 
 
 
-        while (this.questions.length <= 10) {
-            if (nextQuestion) {
-                break
-            }
+        while (this.questions.length <= 10 && nextQuestion) {
+           
             let answer: Answers<string> = await Console.showOptions(
                 [
                     "Choice Question",
@@ -46,9 +44,8 @@ export class Quiz {
             );
             await this.hndQuizType(answer.value);
             if (this.questions.length > 3) {
-                if (await this.askNextQuestion()) {
-                    nextQuestion = false;
-                }
+                nextQuestion = await this.askNextQuestion() 
+               
 
             }
 
