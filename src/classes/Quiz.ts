@@ -43,13 +43,13 @@ export class Quiz {
         await this.playQuiz(allQuizzes[selectedQuiz.value - 1]);
     }
 
-    public async playQuiz(_quiz: QuizDao): Promise<void> {
+    private async playQuiz(_quiz: QuizDao): Promise<void> {
         for (let nQuestion: number = 0; nQuestion < _quiz.questions.length; nQuestion++) {
             await this.askTheQuestion(_quiz.questions[nQuestion]);
         }
 
     }
-    public async askTheQuestion(_question: Question): Promise<void> {
+    private async askTheQuestion(_question: Question): Promise<void> {
         let anwer: boolean = await Question.askTheQuestion(_question);
         this.answers.push(anwer);
     }
