@@ -2,10 +2,11 @@ import prompts, { Answers } from "prompts";
 import Console from "./singletons/Console";
 import { User } from "./User";
 
+
 export class QuizGame {
     public static game: QuizGame = new QuizGame();
-    private newUser: any = new User("user");
-
+    private newUser: User = new User("user");
+    
     public async startApp(): Promise<void> {
 
         await this.showOptionsLogIn();
@@ -31,16 +32,23 @@ export class QuizGame {
         switch (_answer) {
             case 1:
                 userName = await this.newUser.handleUserLogin("register");// enum?
-                if (userName != "User")
+                if (userName != "User" && userName != "wrong") {
                     this.newUser.userName = userName;
-                this.newUser.registered = true;
+                    this.newUser.registered = true;
+                } else if (userName == "wrong") {
+                    await this.showOptionsLogIn();
+                }
                 break;
             case 2:
                 userName = await this.newUser.handleUserLogin("login");
 
-                if (userName != "User")
+                if (userName != "User" && userName != "wrong") {
                     this.newUser.userName = userName;
-                this.newUser.registered = true;
+                    this.newUser.registered = true;
+                }
+                else if (userName == "wrong") {
+                    await this.showOptionsLogIn();
+                }
                 break;
             case 3:
 
@@ -73,7 +81,7 @@ export class QuizGame {
 
         switch (_answer) {
             case 1:
-
+                this.newUser.showStatic();
                 break;
             case 2:
                 await this.newUser.playQuiz();

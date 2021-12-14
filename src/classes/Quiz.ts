@@ -25,7 +25,7 @@ export class Quiz {
     public checkAnswers(): void {
 
     }
-    public async showQuiz(_creator?: string): Promise<void> {
+    public async showQuiz(_creator?: string): Promise<boolean[]> {
         let allQuizzes: QuizDao[] = await FileHandler.readJsonFile("./files/Quiz.json");
 
         let allQuizTitles: string[] = [];
@@ -41,6 +41,7 @@ export class Quiz {
             "which quiz do you want to play?"
         );
         await this.playQuiz(allQuizzes[selectedQuiz.value - 1]);
+        return this.answers;
     }
 
     private async playQuiz(_quiz: QuizDao): Promise<void> {
@@ -50,8 +51,8 @@ export class Quiz {
 
     }
     private async askTheQuestion(_question: Question): Promise<void> {
-        let anwer: boolean = await Question.askTheQuestion(_question);
-        this.answers.push(anwer);
+        let result: boolean = await Question.askTheQuestion(_question);
+        this.answers.push(result);
     }
 
     public async createQuiz(): Promise<void> {
@@ -73,7 +74,7 @@ export class Quiz {
             );
             await this.hndQuizType(answer.value);
             if (this.questions.length > 3) {
-                nextQuestion = await this.askNextQuestion()
+                nextQuestion = await this.askNextQuestion();
 
 
             }
@@ -112,14 +113,12 @@ export class Quiz {
     }
     private async askNextQuestion(): Promise<boolean> {
         let antoherQuestion: Answers<string> = await Console.askForAnAnswers("another question?", 'confirm');
-
         return antoherQuestion.value;
     }
 
     private async saveQuiz(): Promise<void> {
         let publicQuiz: Answers<string> = await Console.askForAnAnswers("the quiz should be public?", 'confirm');
-        FileHandler.writeJsonFile("./files/Quiz.json", new QuizDao(this.creator, this.title, publicQuiz.value, this.questions))
-
+        FileHandler.writeJsonFile("./files/Quiz.json", new QuizDao(this.creator, this.title, publicQuiz.value, this.questions));
 
     }
 }

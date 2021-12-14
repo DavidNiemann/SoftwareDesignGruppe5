@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFile, writeFileSync } from "fs";
 //import { dirname, resolve } from "path";
 
 export class FileHandler {
@@ -25,6 +25,9 @@ export class FileHandler {
     let file: any[] = this.readJsonFile(_pathToFile)
     file.push(_dataToFile)
     writeFileSync(_pathToFile, JSON.stringify(file));
+  }
+  public overwriteJsonFile(_pathToFile : string, _dataToFile: any) : void {
+    writeFileSync(_pathToFile, JSON.stringify(_dataToFile));
   }
 
 }

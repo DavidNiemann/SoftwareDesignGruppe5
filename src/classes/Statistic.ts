@@ -1,34 +1,43 @@
 import FileHandler from "./singletons/FileHandler";
 import { StatisticDao } from "./dao/StatisticDao";
 
-class Statistic {
+export class Statistic {
 
-    private tempStatistic: StatisticDao;
-    private playedQuizes: Number;
-    private submittedAnswers: Number;
-    private correctAnswers: Number;
-    private userID: string;
+    public playedQuizes: number;
+    public submittedAnswers: number;
+    public correctAnswers: number;
+    public userID: string;
 
     constructor(_userID: string) {
         this.playedQuizes = 0;
         this.submittedAnswers = 0;
         this.correctAnswers = 0;
         this.userID = _userID;
-        this.tempStatistic = new StatisticDao(0, 0, 0, "temp");
     }
 
     public saveAsRegisteredUser(): void {
-        FileHandler.writeJsonFile("./files/Statistic.json", new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, this.userID));
+        let statics: StatisticDao[] = FileHandler.readJsonFile("./files/Statistic.json")
+        for (let nstatisc: number = 0; nstatisc < statics.length; nstatisc++) {
+            if (statics[nstatisc].userID == this.userID) {
+                statics[nstatisc] = new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, this.userID);
+                FileHandler.overwriteJsonFile("./files/Statistic.json", statics);
+                return;
+            }
+
+        }
+        statics.push(new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, this.userID));
+        FileHandler.overwriteJsonFile("./files/Statistic.json", statics);
+
     }
 
-    public saveAsTempUser(): void {
-        this.tempStatistic = new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, "temp");
-    }
+    public getStatistic(): StatisticDao {
+        let statics: StatisticDao[] = FileHandler.readJsonFile("./files/Statistic.json")
+        for (let nstatisc: number = 0; nstatisc < statics.length; nstatisc++) {
+            if (statics[nstatisc].userID == this.userID) {
+                return statics[nstatisc]
+            }
 
-    public returnStatistic(temporaryUser: boolean): StatisticDao {
-        if (temporaryUser)
-            return new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, this.userID);
-        else
-            return this.tempStatistic;
+        }
+        return new StatisticDao(this.playedQuizes, this.submittedAnswers, this.correctAnswers, this.userID);
     }
 }
