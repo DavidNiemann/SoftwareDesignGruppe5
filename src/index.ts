@@ -46,7 +46,7 @@ namespace Project {
 
           break;
         case 3:
-
+          
           break;
         default:
           Console.printLine("Option not available!");
@@ -59,9 +59,10 @@ namespace Project {
       this.consoleLine.write("I'm running");
       //this.showOptionsLogin();
       let newQuiz = new Quiz("user");
-
-      newQuiz.createQuiz();
-      
+      let newQuiz2 = new Quiz("user");
+     //await newQuiz.createQuiz();
+     //await newQuiz2.createQuiz();
+     await newQuiz.showQuiz();
     }
     public async handleUser(_task: string): Promise<void> {
       let userName: Answers<string> = await Console.askForAnAnswers("gib dein UserNamen ein", 'text')

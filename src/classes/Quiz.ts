@@ -13,6 +13,7 @@ export class Quiz {
     public creator: string = "User";
     public title: string = "";
     public questions: Question[] = [];
+    private answers: boolean[] = []
 
     constructor(_creator?: string) {
         if (_creator) {
@@ -24,6 +25,34 @@ export class Quiz {
     public checkAnswers(): void {
 
     }
+    public async showQuiz(_creator?: string): Promise<void> {
+        let allQuizzes: QuizDao[] = await FileHandler.readJsonFile("./files/Quiz.json");
+
+        let allQuizTitles: string[] = [];
+
+        for (let nQuiz: number = 0; nQuiz < allQuizzes.length; nQuiz++) {
+            if (allQuizzes[nQuiz].public || allQuizzes[nQuiz].creator == _creator) {
+                allQuizTitles.push(allQuizzes[nQuiz].title);
+            }
+
+        }
+        let selectedQuiz: Answers<string> = await Console.showOptions(
+            allQuizTitles,
+            "which quiz do you want to play?"
+        );
+        await this.playQuiz(allQuizzes[selectedQuiz.value - 1]);
+    }
+
+    public async playQuiz(_quiz: QuizDao): Promise<void> {
+        for (let nQuestion: number = 0; nQuestion < _quiz.questions.length; nQuestion++) {
+            await this.askTheQuestion(_quiz.questions[nQuestion]);
+        }
+
+    }
+    public async askTheQuestion(_question: Question): Promise<void> {
+        let anwer: boolean = await Question.askTheQuestion(_question);
+        this.answers.push(anwer);
+    }
 
     public async createQuiz(): Promise<void> {
         let nextQuestion: boolean = true;
@@ -33,7 +62,7 @@ export class Quiz {
 
 
         while (this.questions.length <= 10 && nextQuestion) {
-           
+
             let answer: Answers<string> = await Console.showOptions(
                 [
                     "Choice Question",
@@ -44,8 +73,8 @@ export class Quiz {
             );
             await this.hndQuizType(answer.value);
             if (this.questions.length > 3) {
-                nextQuestion = await this.askNextQuestion() 
-               
+                nextQuestion = await this.askNextQuestion()
+
 
             }
 
