@@ -36,12 +36,15 @@ export class Quiz {
             }
 
         }
-        let selectedQuiz: Answers<string> = await Console.showOptions(
-            allQuizTitles,
-            "which quiz do you want to play?"
-        );
-        await this.playQuiz(allQuizzes[selectedQuiz.value - 1]);
-        return this.answers;
+        if (allQuizTitles.length > 0) {
+            let selectedQuiz: Answers<string> = await Console.showOptions(
+                allQuizTitles,
+                "which quiz do you want to play?"
+            );
+            await this.playQuiz(allQuizzes[selectedQuiz.value - 1]);
+            return this.answers;
+        }
+        return [];
     }
 
     private async playQuiz(_quiz: QuizDao): Promise<void> {

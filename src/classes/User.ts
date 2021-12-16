@@ -18,7 +18,9 @@ export class User {
 
     public async createQuiz(): Promise<void> {
         let newQuiz: Quiz = new Quiz(this.userName);
+        
         await newQuiz.createQuiz();
+      
     }
 
     public showStatic(): void {
