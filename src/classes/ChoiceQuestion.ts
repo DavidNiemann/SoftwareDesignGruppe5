@@ -3,10 +3,10 @@ import Console from './singletons/Console';
 import { Question } from './Question'
 
 export class ChoiceQuestion extends Question {
-    protected questionText: string = "";
+    public questionText: string = "";
     public answers: Array<string> = [];
-    protected correctAnswer: string = "";
-    protected type: prompts.PromptType = 'text'
+    public correctAnswer: string = "";
+    public type: prompts.PromptType = 'text'
     constructor(
     ) {
         super();
@@ -18,15 +18,16 @@ export class ChoiceQuestion extends Question {
 
         let nextAnswer: boolean= true;
         while(nextAnswer == true){
-            let falseAnswer: Answers<string>= await Console.askForAnAnswers("Gib eine falsche Antwort ein:", this.type);
+            let falseAnswer: Answers<string>= await Console.askForAnswers("Gib eine falsche Antwort ein:", this.type);
             this.answers.push(falseAnswer.value);
             if(this.answers.length>=4){
                 nextAnswer = false;
                 break;
             }
-            let antoherAnswer: Answers<string>= await Console.askForAnAnswers("Willst du noch eine Frage eingeben?:", 'confirm');
-            nextAnswer=antoherAnswer.value;
+            let anotherAnswer: Answers<string>= await Console.askForAnswers("Willst du noch eine Antwort eingeben?:", 'confirm');
+            nextAnswer=anotherAnswer.value;
         }
+        Console.printLine("\nQuestion added!\n");
     }
 
 

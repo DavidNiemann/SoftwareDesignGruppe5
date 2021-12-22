@@ -14,7 +14,10 @@ export class Quiz {
     
     }
 
-    public checkAnswers(): void {
+    public checkAnswers(_questionNr: number, _answer: string | number): boolean {
         
+        if (this.question[_questionNr].correctAnswer == _answer)
+            return true;
+        return false;
     }
 }

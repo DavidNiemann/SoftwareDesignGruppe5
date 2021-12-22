@@ -3,9 +3,9 @@ import Console from './singletons/Console';
 import { Question } from './Question';
 
 export class NumberQuestion extends Question {
-    protected questionText: string = "";
-    protected correctAnswer: number = 0;
-    protected type: prompts.PromptType = 'number'
+    questionText: string = "";
+    correctAnswer: number = 0;
+    type: prompts.PromptType = 'number'
 
     constructor(
     ) {
@@ -13,9 +13,7 @@ export class NumberQuestion extends Question {
     }
 
     public clone(): NumberQuestion {
-        let clonedQuestion: NumberQuestion = new NumberQuestion(
-
-        );
+        let clonedQuestion: NumberQuestion = new NumberQuestion();
         return clonedQuestion;
     }
 }
